@@ -1,0 +1,74 @@
+@model List<AutoLot.Models.Car>
+@{
+    ViewData["Title"] = "AutoLot - Car Inventory";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-4 mb-3">AutoLot Inventory</h1>
+            <p class="lead">Quality pre-owned vehicles at great prices</p>
+        </div>
+    </div>
+    
+    <div class="row" id="car-grid">
+        @foreach (var car in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm car-card">
+                    <img src="@car.ImageUrl" class="card-img-top car-image" alt="@car.Year @car.Make @car.Model">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@car.Year @car.Make @car.Model</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@car.Trim</h6>
+                        <p class="card-text flex-grow-1">
+                            <strong class="text-success fs-4">$@car.Price.ToString("N0")</strong><br>
+                            <small class="text-muted">@car.Mileage.ToString("N0") miles</small>
+                        </p>
+                        <a href="@Url.Action("Details", new { id = car.Id })" class="btn btn-primary mt-auto">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .car-card {
+        transition: transform 0.2s ease-in-out;
+        cursor: pointer;
+    }
+    
+    .car-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .car-image {
+        height: 250px;
+        object-fit: cover;
+    }
+    
+    .card-title {
+        font-weight: 600;
+        color: #333;
+    }
+    
+    @@media (max-width: 768px) {
+        .car-image {
+            height: 200px;
+        }
+        
+        #car-grid .col-md-6 {
+            margin-bottom: 1.5rem;
+        }
+    }
+    
+    @@media (max-width: 576px) {
+        .display-4 {
+            font-size: 2rem;
+        }
+        
+        .car-image {
+            height: 180px;
+        }
+    }
+</style>

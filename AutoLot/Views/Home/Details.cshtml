@@ -1,0 +1,198 @@
+@model AutoLot.Models.Car
+@{
+    ViewData["Title"] = $"{Model.Year} {Model.Make} {Model.Model} - Details";
+}
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-12">
+            <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Inventory
+            </a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <img src="@Model.ImageUrl" class="card-img-top details-image" alt="@Model.Year @Model.Make @Model.Model">
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">@Model.Year @Model.Make @Model.Model</h2>
+                    <h4 class="card-subtitle mb-3 text-muted">@Model.Trim</h4>
+                    
+                    <div class="price-section mb-4">
+                        <h3 class="text-success mb-0">$@Model.Price.ToString("N0")</h3>
+                        <small class="text-muted">Best price guarantee</small>
+                    </div>
+                    
+                    <div class="contact-section">
+                        <button class="btn btn-success btn-lg w-100 mb-2">
+                            <i class="fas fa-phone"></i> Call Now
+                        </button>
+                        <button class="btn btn-primary btn-lg w-100 mb-2">
+                            <i class="fas fa-envelope"></i> Email Us
+                        </button>
+                        <button class="btn btn-outline-primary btn-lg w-100">
+                            <i class="fas fa-calendar"></i> Schedule Test Drive
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Vehicle Details</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Year:</strong></td>
+                                        <td>@Model.Year</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Make:</strong></td>
+                                        <td>@Model.Make</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Model:</strong></td>
+                                        <td>@Model.Model</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Trim:</strong></td>
+                                        <td>@Model.Trim</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mileage:</strong></td>
+                                        <td>@Model.Mileage.ToString("N0") miles</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Color:</strong></td>
+                                        <td>@Model.Color</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Engine:</strong></td>
+                                        <td>@Model.Engine</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Transmission:</strong></td>
+                                        <td>@Model.Transmission</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Fuel Type:</strong></td>
+                                        <td>@Model.FuelType</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Drivetrain:</strong></td>
+                                        <td>@Model.Drivetrain</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>VIN:</strong></td>
+                                        <td><small>@Model.VIN</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Date Added:</strong></td>
+                                        <td>@Model.DateAdded.ToString("MM/dd/yyyy")</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @if (!string.IsNullOrEmpty(Model.Features))
+    {
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Features & Options</h4>
+                        <div class="features-list">
+                            @foreach (var feature in Model.Features.Split(','))
+                            {
+                                <span class="badge bg-secondary me-2 mb-2">@feature.Trim()</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    
+    @if (!string.IsNullOrEmpty(Model.Description))
+    {
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Description</h4>
+                        <p class="card-text">@Model.Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .details-image {
+        height: 400px;
+        object-fit: cover;
+    }
+    
+    .price-section {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1rem;
+    }
+    
+    .contact-section .btn {
+        font-weight: 500;
+    }
+    
+    .features-list .badge {
+        font-size: 0.9em;
+        padding: 0.5em 0.75em;
+    }
+    
+    @@media (max-width: 768px) {
+        .details-image {
+            height: 300px;
+        }
+        
+        .contact-section .btn {
+            font-size: 0.9rem;
+            padding: 0.6rem 1rem;
+        }
+    }
+    
+    @@media (max-width: 576px) {
+        .details-image {
+            height: 250px;
+        }
+        
+        .table td {
+            padding: 0.5rem 0.25rem;
+            font-size: 0.9rem;
+        }
+    }
+</style>
